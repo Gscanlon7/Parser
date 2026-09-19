@@ -1,6 +1,6 @@
-workspace "Compiler"
+workspace "Parser"
 	architecture "x86_64"
-	startproject "Compiler"
+	startproject "Parser"
 
 	configurations
 	{

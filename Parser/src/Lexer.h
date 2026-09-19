@@ -1,16 +1,5 @@
 #pragma once
 #include <stdint.h>
-class Lexer {
-
-public:
-	Lexer() {}
-	~Lexer() {}
-public:
-	Token advance();
-	void skip_whitespace();
-private:
-	char* current;
-};
 
 enum class TokenType {
 	LeftBracket,
@@ -54,4 +43,16 @@ public:
 	TokenType type;
 	uint32_t start;
 	uint32_t end;
+};
+
+class Lexer {
+
+public:
+	Lexer();
+	~Lexer() {}
+public:
+	Token advance_ptr();
+	void skip_whitespace();
+private:
+	char* current;
 };
