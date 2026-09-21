@@ -48,11 +48,15 @@ public:
 class Lexer {
 
 public:
-	Lexer();
+	Lexer(const char* file);
 	~Lexer() {}
 public:
 	Token advance_ptr();
 	void skip_whitespace();
 private:
-	char* current;
+	Token make_token(const TokenType& token);
+private:
+	char* m_CurrentCharacter;
+	uint32_t m_CurrentLineNumber = 0;
+	uint32_t m_CurrentColumnNumber = 0;
 };
