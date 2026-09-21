@@ -35,7 +35,7 @@ Token Lexer::make_token(const TokenType& token) {
 	switch (token) {
 		case TokenType::LeftBracket:
 		case TokenType::RightBracket:
-		case TokenType::LeftBrace:	
+		case TokenType::LeftBrace:
 		case TokenType::RightBrace:
 		case TokenType::LeftParentheses:
 		case TokenType::RightParentheses:
