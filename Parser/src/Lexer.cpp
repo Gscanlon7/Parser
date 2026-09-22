@@ -15,62 +15,51 @@ void Lexer::skip_whitespace() {
 	}
 }
 
-static TokenType process_token(const char c) {
-	switch (c) {
-		case '[': return { TokenType::LeftBracket };
-		case ']': return { TokenType::RightBracket };
-		case '{': return { TokenType::LeftBrace };
-		case '}': return { TokenType::RightBrace };
-		case '(': return { TokenType::LeftParentheses };
-		case ')': return { TokenType::RightParentheses };
-		case '<': return { TokenType::LeftAngleBracket };
-		case '>': return { TokenType::RightAngleBracket };
-		case ';': return { TokenType::Semicolon };
+ Token& Lexer::process_token(Token& token) {
+	switch (*m_CurrentCharacter) {
+		case '[':  token = make_token({ TokenType::LeftBracket		 }, 1);		break;
+		case ']':  token = make_token({ TokenType::RightBracket	     }, 1);		break;
+		case '{':  token = make_token({ TokenType::LeftBrace		 }, 1);		break;
+		case '}':  token = make_token({ TokenType::RightBrace	     }, 1);		break;
+		case '(':  token = make_token({ TokenType::LeftParentheses   }, 1);		break;
+		case ')':  token = make_token({ TokenType::RightParentheses  }, 1);		break;
+		case '<':  token = make_token({ TokenType::LeftAngleBracket  }, 1);		break;
+		case '>':  token = make_token({ TokenType::RightAngleBracket }, 1);		break;
+		case ';':  token = make_token({ TokenType::Semicolon		 }, 1);		break;
+		case ':':  token = make_token({ TokenType::Colon			 }, 1);	    break;
+		case '/':  token = make_token({ TokenType::ForwardSlash      }, 1);	    break;
+		case '\\': token = make_token({ TokenType::BackSlash		 }, 1);	    break;
+		case '-':  token = make_token({ TokenType::Hyphen			 }, 1);	    break;
+		case '_':  token = make_token({ TokenType::Underscore		 }, 1);	    break;
+		case '|':  token = make_token({ TokenType::Pipe				 }, 1);	    break;
+		case '*':  token = make_token({ TokenType::Astricks			 }, 1);	    break;
+		case '~':  token = make_token({ TokenType::Tilda			 }, 1);	    break;
+		case '\'': token = make_token({ TokenType::SingleQuote		 }, 1);	    break;
+		case '\"': token = make_token({ TokenType::DoubleQuote		 }, 1);	    break;
+		case '!':  token = make_token({ TokenType::ExclamationMark	 }, 1);	    break;
+		case '?':  token = make_token({ TokenType::QuestionMark		 }, 1);	    break;
+		case '.':  token = make_token({ TokenType::Period			 }, 1);	    break;
+		case ',':  token = make_token({ TokenType::Comma			 }, 1);	    break;
+		case '=':  token = make_token({ TokenType::Equal			 }, 1);	    break;
+		case '+':  token = make_token({ TokenType::Plus				 }, 1);	    break;
+		case '@':  token = make_token({ TokenType::At				 }, 1);	    break;
+		case '#':  token = make_token({ TokenType::Pound			 }, 1);	    break;
+		case '$':  token = make_token({ TokenType::DollarSign		 }, 1);	    break;
+		case '%':  token = make_token({ TokenType::Percentage		 }, 1);	    break;
+		case '^':  token = make_token({ TokenType::Caret			 }, 1);	    break;
+		case '&':  token = make_token({ TokenType::Ampersand		 }, 1);	    break;
+		case '`':  token = make_token({ TokenType::Grave			 }, 1);	    break;
 	}
 }
 
-Token Lexer::make_token(const TokenType& token) {
-	uint32_t length = 0;
-
-	switch (token) {
-		case TokenType::LeftBracket:
-		case TokenType::RightBracket:
-		case TokenType::LeftBrace:
-		case TokenType::RightBrace:
-		case TokenType::LeftParentheses:
-		case TokenType::RightParentheses:
-		case TokenType::LeftAngleBracket:
-		case TokenType::RightAngleBracket:
-		case TokenType::Semicolon:
-		case TokenType::Colon:
-		case TokenType::ForwardSlash:
-		case TokenType::BackSlash:
-		case TokenType::Hyphen:
-		case TokenType::Underscore:
-		case TokenType::Pipe:
-		case TokenType::Astricks:
-		case TokenType::Tilda:
-		case TokenType::SingleQuote:
-		case TokenType::DoubleQuote:
-		case TokenType::ExclamationMark:
-		case TokenType::QuestionMark:
-		case TokenType::Period:
-		case TokenType::Comma:
-		case TokenType::Equal:
-		case TokenType::Plus:
-		case TokenType::At:
-		case TokenType::Pound:
-		case TokenType::DollarSign:
-		case TokenType::Percentage:
-		case TokenType::Caret:
-		case TokenType::Ampersand:
-		case TokenType::Grave: length = 1; break;
-	}
-
-	return { token, m_CurrentLineNumber, m_CurrentColumnNumber + length };
+Token Lexer::make_token(const TokenType& type, size_t length) {
+	return { type, { m_CurrentCharacter, length }, m_CurrentLineNumber, m_CurrentColumnNumber };
 }
 
 Token Lexer::advance_ptr() {
 	m_CurrentCharacter++;
-	return make_token(process_token(*m_CurrentCharacter));
+	Token token{};
+	process_token(token);
+
+	return token;
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include <stdint.h>
+#include <string>
 
 enum class TokenType {
 	LeftBracket,
@@ -40,9 +41,10 @@ class Token {
 public:
 
 public:
-	TokenType type;
-	uint32_t start;
-	uint32_t end;
+	TokenType type{};
+	std::string_view position{};
+	uint32_t line = 0;
+	uint32_t col = 0;
 };
 
 class Lexer {
@@ -54,7 +56,8 @@ public:
 	Token advance_ptr();
 	void skip_whitespace();
 private:
-	Token make_token(const TokenType& token);
+	Token& process_token(Token& token);
+	Token make_token(const TokenType& type, size_t length);
 private:
 	char* m_CurrentCharacter;
 	uint32_t m_CurrentLineNumber = 0;
