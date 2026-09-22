@@ -34,7 +34,33 @@ enum class TokenType {
 	Percentage,
 	Caret,
 	Ampersand,
-	Grave
+	Grave,
+
+	DoubleLeftAngularBracket,
+	DoubleRightAngularBracket,
+	DoublePlus,
+	DoubleMinus,
+	DoubleEqual,
+	PlusEqual,
+	MinusEqual,
+	MultEqual,
+	DivEqual,
+	DoubleAmpersand,
+	AmpersandEqual,
+	DoublePipe,
+	PipeEqual,
+	DoubleColon,
+	GreaterThanEqual,
+	LessThanEqual,
+	NotEqual,
+	Comment,
+
+	Int,
+	Float,
+	Double,
+	Char,
+
+
 };
 
 class Token {
