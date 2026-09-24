@@ -82,7 +82,7 @@ public:
 	void skip_whitespace();
 private:
 	void process_token(Token& token);
-	Token make_token(const TokenType& type, size_t length);
+	Token make_token(TokenType type, size_t length);
 private:
 	const char* m_CurrentCharacter;
 	uint32_t m_CurrentLineNumber = 0;

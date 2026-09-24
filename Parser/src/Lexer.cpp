@@ -113,7 +113,7 @@ void Lexer::skip_whitespace() {
 	}
 }
 
-Token Lexer::make_token(const TokenType& type, size_t length) {
+Token Lexer::make_token(TokenType type, size_t length) {
 	return { type, { m_CurrentCharacter, length }, m_CurrentLineNumber, m_CurrentColumnNumber };
 }
 
