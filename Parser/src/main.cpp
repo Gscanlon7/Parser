@@ -36,13 +36,5 @@ int k << *r;
 	Lexer lexer{str};
 
 	lexer.advance_ptr();
-	lexer.advance_ptr();
-	lexer.advance_ptr();
-	lexer.advance_ptr();
-	lexer.advance_ptr();
-	lexer.advance_ptr();
-	lexer.advance_ptr();
-	lexer.advance_ptr();
-	//std::cout << file;
 	return 0;
 }

@@ -3,9 +3,14 @@
 Lexer::Lexer(const char* file) : m_CurrentCharacter(file) {}
 
 void Lexer::skip_whitespace() {
-	const char current = *m_CurrentCharacter;
-	while (current == ' ' || current == '\t' || current == '\r' || current == '\n' || current == '\0' || (current == '/' && m_CurrentCharacter[1] == '/')) {
-		if (current == '/' && m_CurrentCharacter[1] == '/') {
+	while (*m_CurrentCharacter == ' ' || 
+	      (*m_CurrentCharacter == '/' && m_CurrentCharacter[1] == '/') ||
+		   *m_CurrentCharacter == '\t' || 
+		   *m_CurrentCharacter == '\r' || 
+		   *m_CurrentCharacter == '\n' || 
+		   *m_CurrentCharacter == '\0') {
+
+		if (*m_CurrentCharacter == '/' && m_CurrentCharacter[1] == '/') {
 			while (*m_CurrentCharacter++ != '\n');
 
 			m_CurrentLineNumber++;
@@ -13,14 +18,15 @@ void Lexer::skip_whitespace() {
 			continue;
 		}
 
-		m_CurrentCharacter++;
-		m_CurrentColumnNumber++;
 
-		if (current == '\n') {
+		if (*m_CurrentCharacter == '\n') {
+			m_CurrentCharacter++;
 			m_CurrentLineNumber++;
 			m_CurrentColumnNumber = 0;
 			continue;
 		}
+		m_CurrentColumnNumber++;
+		m_CurrentCharacter++;
 	}
 }
 
@@ -112,12 +118,11 @@ Token Lexer::make_token(const TokenType& type, size_t length) {
 }
 
 Token Lexer::advance_ptr() {
-	m_CurrentCharacter++;
-
 	skip_whitespace();
-	std::cout << "char: " << *m_CurrentCharacter << "\n";
+
 	Token token{};
 	process_token(token);
+	m_CurrentCharacter++;
 
 	return token;
 }
