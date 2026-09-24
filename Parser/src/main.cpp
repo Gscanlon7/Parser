@@ -1,4 +1,5 @@
 #include <iostream>
+#include "Lexer.h"
 
 int main() {
 	const char* file = R"(
@@ -29,15 +30,19 @@ int> r << .l;
 
 int k << *r;
 
-
-
-
-
-
-
-
-
 )";
-	std::cout << file;
+
+	const char* str = "aaa       bcdefg";
+	Lexer lexer{str};
+
+	lexer.advance_ptr();
+	lexer.advance_ptr();
+	lexer.advance_ptr();
+	lexer.advance_ptr();
+	lexer.advance_ptr();
+	lexer.advance_ptr();
+	lexer.advance_ptr();
+	lexer.advance_ptr();
+	//std::cout << file;
 	return 0;
 }

@@ -1,11 +1,11 @@
+#include <iostream>
 #include "Lexer.h"
-
 Lexer::Lexer(const char* file) : m_CurrentCharacter(file) {}
 
 void Lexer::skip_whitespace() {
 	const char current = *m_CurrentCharacter;
-	while (current == ' ' || current == '\t' || current == '\r' || current == '\n' || current == '\0' || (current == '/' && m_CurrentCharacter[1] == '/') {
-		if ((current == '/' && m_CurrentCharacter[1] == '/') {
+	while (current == ' ' || current == '\t' || current == '\r' || current == '\n' || current == '\0' || (current == '/' && m_CurrentCharacter[1] == '/')) {
+		if (current == '/' && m_CurrentCharacter[1] == '/') {
 			while (*m_CurrentCharacter++ != '\n');
 
 			m_CurrentLineNumber++;
@@ -14,16 +14,17 @@ void Lexer::skip_whitespace() {
 		}
 
 		m_CurrentCharacter++;
+		m_CurrentColumnNumber++;
+
 		if (current == '\n') {
 			m_CurrentLineNumber++;
 			m_CurrentColumnNumber = 0;
 			continue;
 		}
-		m_CurrentColumnNumber++;
 	}
 }
 
- Token& Lexer::process_token(Token& token) {
+ void Lexer::process_token(Token& token) {
 	switch (*m_CurrentCharacter) {
 		case '<':  
 			if (m_CurrentCharacter[1] == '<')
@@ -114,7 +115,7 @@ Token Lexer::advance_ptr() {
 	m_CurrentCharacter++;
 
 	skip_whitespace();
-
+	std::cout << "char: " << *m_CurrentCharacter << "\n";
 	Token token{};
 	process_token(token);
 

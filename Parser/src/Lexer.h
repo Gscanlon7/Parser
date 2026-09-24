@@ -81,7 +81,7 @@ public:
 	Token advance_ptr();
 	void skip_whitespace();
 private:
-	Token& process_token(Token& token);
+	void process_token(Token& token);
 	Token make_token(const TokenType& type, size_t length);
 private:
 	const char* m_CurrentCharacter;
