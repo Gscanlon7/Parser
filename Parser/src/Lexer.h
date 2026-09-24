@@ -54,12 +54,7 @@ enum class TokenType {
 	LessThanEqual,
 	NotEqual,
 
-	Int,
-	Float,
-	Double,
-	Char,
-
-
+	NullTerminator
 };
 
 class Token {
@@ -78,10 +73,10 @@ public:
 	Lexer(const char* file);
 	~Lexer() {}
 public:
-	Token advance_ptr();
-	void skip_whitespace();
+	Token advance();
 private:
-	void process_token(Token& token);
+	void skip_whitespace();
+	Token process_token();
 	Token make_token(TokenType type, size_t length);
 private:
 	const char* m_CurrentCharacter;
