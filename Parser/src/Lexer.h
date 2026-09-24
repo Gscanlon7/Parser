@@ -53,7 +53,6 @@ enum class TokenType {
 	GreaterThanEqual,
 	LessThanEqual,
 	NotEqual,
-	Comment,
 
 	Int,
 	Float,

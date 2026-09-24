@@ -78,8 +78,6 @@ void Lexer::skip_whitespace() {
 				token = make_token(TokenType::MultEqual, 2);	break;
 			token     = make_token(TokenType::Astricks, 1);		break;
 		case '/':  
-			if (m_CurrentCharacter[1] == '/')
-				token = make_token(TokenType::Comment, 2);		break;
 			if (m_CurrentCharacter[1] == '=')
 				token = make_token(TokenType::DivEqual, 2);		break;
 			token	  = make_token(TokenType::ForwardSlash, 1);	break;
