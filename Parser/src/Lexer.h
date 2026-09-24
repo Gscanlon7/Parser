@@ -85,7 +85,7 @@ private:
 	Token& process_token(Token& token);
 	Token make_token(const TokenType& type, size_t length);
 private:
-	char* m_CurrentCharacter;
+	const char* m_CurrentCharacter;
 	uint32_t m_CurrentLineNumber = 0;
 	uint32_t m_CurrentColumnNumber = 0;
 };
