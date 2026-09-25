@@ -1,32 +1,33 @@
 #include <iostream>
 #include "Lexer.h"
+
 Lexer::Lexer(const char* file) : m_CurrentCharacter(file) {}
 
-static 	bool is_white_space(char c) {
-	return (c == ' ' ||
-		    c == '\t' ||
-		    c == '\r' ||
-		    c == '\n');
+static 	bool is_whitespace(char c) {
+	return c == ' ' || c == '\t' || c == '\r' || c == '\n';
+}
+
+void Lexer::advance(uint32_t length) {
+	m_CurrentCharacter += length;
+	m_CurrentColumnNumber += length;
+}
+void Lexer::skip_comment() {
+	if (!(*m_CurrentCharacter == '/' && m_CurrentCharacter[1] == '/'))
+		return;
+
+	while (*(++m_CurrentCharacter) != '\n');
+
+	m_CurrentLineNumber++;
+	m_CurrentColumnNumber = 0;
 }
 void Lexer::skip_whitespace() {
-
-	while ((*m_CurrentCharacter == '/' && m_CurrentCharacter[1] == '/') || is_white_space(*m_CurrentCharacter)) {
-
-		if (!is_white_space(*m_CurrentCharacter)) {
-			while (*(++m_CurrentCharacter) != '\n');
-
+	skip_comment();
+	while (is_whitespace(*m_CurrentCharacter)) {
+		if (*m_CurrentCharacter == '\n') {
 			m_CurrentLineNumber++;
 			m_CurrentColumnNumber = 0;
 		}
-		else if (*m_CurrentCharacter == '\n') {
-			m_CurrentLineNumber++;
-			m_CurrentColumnNumber = 0;
-		}
-		else {
-			m_CurrentColumnNumber++;
-		}
-
-		m_CurrentCharacter++;
+		advance(1);
 	}
 }
 
@@ -118,7 +119,7 @@ Token Lexer::make_token(TokenType type, size_t length) {
 	return { type, { m_CurrentCharacter, length }, m_CurrentLineNumber, m_CurrentColumnNumber };
 }
 
-Token Lexer::advance() {
+Token Lexer::next() {
 	skip_whitespace();
 
 	Token token = process_token();

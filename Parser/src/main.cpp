@@ -65,7 +65,7 @@ $
 	Lexer lexer{str};
 	Token token{};
 	while (token.type != TokenType::NullTerminator) {
-		token = lexer.advance();
+		token = lexer.next();
 		std::cout << "TYPE: " << (uint32_t)token.type << ", LINE: " << token.line << ", COL: " << token.col << std::endl;
 	}
 

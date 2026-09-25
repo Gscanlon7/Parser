@@ -73,9 +73,11 @@ public:
 	Lexer(const char* file);
 	~Lexer() {}
 public:
-	Token advance();
+	Token next();
 private:
+	void skip_comment();
 	void skip_whitespace();
+	void advance(uint32_t length);
 	Token process_token();
 	Token make_token(TokenType type, size_t length);
 private:
